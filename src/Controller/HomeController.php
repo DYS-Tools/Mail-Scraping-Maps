@@ -21,11 +21,10 @@ class HomeController extends AbstractController
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $request = $form->getData();
+            $request = $form->getData()['search'];
 
-            $results = "I's a Results";
+            $results = $fetching->fetch('https://www.google.fr/maps/search/' . $request . 'e/@49.6192493,0.257829,12z');
+            //$results = "I's a Results";
 
             return $this->render('home/result.html.twig', [
             'results' => $results,

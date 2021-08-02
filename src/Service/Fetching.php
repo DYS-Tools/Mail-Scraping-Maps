@@ -6,34 +6,31 @@ class Fetching
 {
   public function fetch($url){
     $ch = curl_init();
-    try {
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_HEADER, false);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      //curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);   
-      //curl_setopt($ch, CURLOPT_TIMEOUT, 5);         
-      //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-      //curl_setopt($ch, CURLOPT_MAXREDIRS, 1);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);   
+    //curl_setopt($ch, CURLOPT_TIMEOUT, 5);         
+    //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    //curl_setopt($ch, CURLOPT_MAXREDIRS, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-      //$response = 
-      return curl_exec($ch);
+    //$response = 
+    return curl_exec($ch);
 
-      if (curl_errno($ch)) {
-        echo curl_error($ch);
-      }
-
-      $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-      if ($http_code == intval(200)) {
-        //echo $response;
-      } else {
-        echo "Ressource introuvable : " . $http_code;
-      }
-    } catch (\Throwable $th) {
-      throw $th;
-    } finally {
-      curl_close($ch);
+    if (curl_errno($ch)) {
+      echo curl_error($ch);
     }
+
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($http_code == intval(200)) {
+      //echo $response;
+    } else {
+      echo "Ressource introuvable : " . $http_code;
+    }
+
+    curl_close($ch);
+    
   }
 
   public function containEmailInUrl($url) {
