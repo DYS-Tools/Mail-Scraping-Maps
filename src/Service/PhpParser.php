@@ -2,15 +2,10 @@
 
 namespace App\Service;
 
-//use Service\simple_html_dom;
-
-//use App\Service\PhpParser\simple_html_dom_node;
-
-
 class PhpParser
 {
   /**
-   * Fork from http://sourceforge.net/projects/simplehtmldom/
+   * Fork from http://sourceforge.net/projects/simplehtmldom/ for Symfony
    * Author : Sacha Durand
    */
 
