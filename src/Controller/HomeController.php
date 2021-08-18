@@ -9,23 +9,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Export;
 use App\Service\Fetching;
+use App\Service\PhpParser;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, Export $export, Fetching $fetching): Response
+    public function index(Request $request, Export $export, Fetching $fetching, PhpParser $phpParser): Response
     {
         $form = $this->createForm(KeywordSearchType::class);
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $request = $form->getData()['search'];
+            $request = $form->getData()['search']; 
+            $url = $fetching->fetch('https://www.google.fr/maps/search/' . $request . '/');
+            $url = 'https://www.google.fr';
+            //$html = file_get_html($url);
+            $html = $phpParser->file_get_html($url);
 
-            $results = $fetching->fetch('https://www.google.fr/maps/search/' . $request . 'e/@49.6192493,0.257829,12z');
-            //$results = "I's a Results";
-
+            $results = $html;
             return $this->render('home/result.html.twig', [
             'results' => $results,
         ]);
