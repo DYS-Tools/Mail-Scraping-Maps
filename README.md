@@ -22,7 +22,10 @@ The Blitz application works with the symfony framework ( 5.0.5 ).
 -  run `php bin/console d:m:m`
 -  run `php bin/console d:f:l -n`
 
--  You can run this project with docker containers ( docker-compose included in this repository )
+## Run webpack in dev
+
+- yarn install
+- yarn build ( for generate public/build folders)
 
 ##### For Docker run :
 
