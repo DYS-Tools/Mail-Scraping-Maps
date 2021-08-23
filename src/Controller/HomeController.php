@@ -23,19 +23,22 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $request = $form->getData()['search']; 
-
+            $results = [];
             //trying scrap with googleMaps
-            $url = $fetching->fetch('https://www.google.fr/maps/search/' . $request . '/');
-
-            
+            $url = 'https://www.google.fr/maps/search/'.$request.'/@49.1481275,1.5162138,9z';
+            //$url = $fetching->fetch('https://www.google.fr/maps/search/' . $request . '/');
 
             // Scraping logic example
-            $url = 'https://www.google.fr';
+            //$url = 'https://www.google.fr';
             $html = $phpParser->file_get_html($url); // GET url
-            $results = $html->find('a',0)->href;  // find first a balise
+            //dd($html);
+            $links = $html->find("a");  // find first a balise
+            foreach ($links as $el) {
+                array_push($results, $el->href);
+            }
 
             return $this->render('home/result.html.twig', [
-            'results' => $results,
+            'results' => json_encode($results),
         ]);
         }
 
