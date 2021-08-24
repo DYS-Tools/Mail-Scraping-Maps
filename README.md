@@ -26,6 +26,7 @@ The Blitz application works with the symfony framework ( 5.0.5 ).
 
 - yarn install
 - yarn build ( for generate public/build folders)
+- yarn run encore dev --watch (launch continuous server)
 
 ##### For Docker run :
 
