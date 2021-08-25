@@ -13,6 +13,7 @@ Encore
     .autoProvidejQuery()
     //.enablePostCssLoader()
     .enableVersioning(Encore.isProduction())
+    .splitEntryChunks()
 
     //react-Options
     .enableReactPreset()
