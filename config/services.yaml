@@ -27,3 +27,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Payment
+    App\Service\Payment:
+        arguments:
+            # for Paypal
+            $sandbox_account_test: '%env(resolve:SANDBOX_ACCOUNT_TEST)%'
+            $paypal_client_id_test: '%env(resolve:PAYPAL_CLIENT_ID_TEST)%'
+            $paypal_secret_test : '%env(resolve:PAYPAL_SECRET_TEST)%'
+            # for Stripe
+            #$secretStripeKeyTest: '%env(resolve:STRIPE_SECRET_TEST)%'
+            #$publicStripeKeyTest: '%env(resolve:STRIPE_PUBLIC_TEST)%'

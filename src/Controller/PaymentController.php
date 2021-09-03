@@ -16,7 +16,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("/pay/", name="app_pay")
      */
-    public function index(): Response
+    public function indexListPrice(): Response
     {
 
         return $this->render('home/payment.html.twig', [

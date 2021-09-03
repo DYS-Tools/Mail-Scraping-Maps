@@ -10,9 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\Export;
 use App\Service\Fetching;
 use App\Service\PhpParser;
+use Symfony\Component\HttpClient\HttpClient;
 
 class HomeController extends AbstractController
 {
+
     /**
      * @Route("/", name="home")
      */
@@ -37,8 +39,20 @@ class HomeController extends AbstractController
                 array_push($results, $el->href);
             }
 
+            $client = HttpClient::create();
+            $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
+
+            // DEMO
+            $statusCode = $response->getStatusCode(); // $statusCode = 200
+            $contentType = $response->getHeaders()['content-type'][0]; // // $contentType = 'application/json'
+            $content = $response->getContent(); // $content = '{"id":521583, "name":"symfony-docs", ...}'
+            $content = $response->toArray(); // // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+
+            $test = $statusCode; 
+
             return $this->render('home/result.html.twig', [
             'results' => json_encode($results),
+            'test' => $test,
         ]);
         }
 
