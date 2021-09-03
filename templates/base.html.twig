@@ -22,18 +22,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Sygma Mail <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Explore</a>
-            </li>
-
+          
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_login') }}">Connection</a>
             </li>
@@ -47,9 +38,17 @@
                 <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
             </li>
 
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_pay') }}">Acheter des crédits</a>
+            </li>
+
             </ul>
         </div>
         </nav>
+
+        <br/> 
+        <br/>
 
         <div class="container">
             {% block body %}
@@ -57,6 +56,8 @@
             {% endblock %}
 
         </div>
+        <br/> 
+        <br/>
 
         {% block javascripts %}
             {{ encore_entry_script_tags('main') }}

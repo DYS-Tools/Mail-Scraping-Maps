@@ -26,7 +26,7 @@ class UserFixtures extends AppFixtures
         // Create Yohann Admin
         $yohann = new User();
         $yohann->setEmail('yohanndurand76@gmail.com');
-        $yohann->setPassword($this->passwordHasher->hashPassword($yohann,'dev'));
+        $yohann->setPassword($this->passwordHasher->hashPassword($yohann,'devdev'));
         $yohann->setRoles(["ROLE_ADMIN"]);
         $manager->persist($yohann);
 

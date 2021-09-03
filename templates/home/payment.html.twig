@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement {% endblock %}
+
+{% block body %}
+
+
+<div class="container"> 
+
+
+
+<h1> Acheter des crédits ( 1 Crédit = 1 mail ) </h1> 
+
+{% if app.user %}
+
+
+<p> Pour le moment vous avez : {{ app.user.credit }} credit ! <br/> <br/>
+
+
+    {% if app.user.credit == 50 %}
+        La Version d'essai de Sygma est de 50 crédits. <br/> <br/>
+    {% endif %}
+
+<br/> <br/>
+
+{% endif %}
+
+        {#  {{ path('payout') }}  #}
+
+        <a class="btn btn-info" href="">
+            Acheter 1000 crédit ( 0,20e le crédit ) 
+        </a>
+
+        <br/> <br/>
+
+        <a class="btn btn-info" href="">
+            Acheter 2000 crédit ( 0,18e le crédit ) 
+        </a>
+
+        <br/> <br/>
+
+        <a class="btn btn-info" href="">
+            Acheter 3000 crédit ( 0,16e le crédit ) 
+        </a>
+
+        <br/> <br/>
+
+        <a class="btn btn-info" href="">
+            Acheter 5000 crédit ( 0,13e le crédit ) 
+        </a>
+
+        <br/> <br/>
+
+        <a class="btn btn-info" href="">
+            Acheter 10 000 crédit ( 0,10e le crédit ) 
+        </a>
+
+
+
+
+
+
+</div> 
+
+{% endblock %}
