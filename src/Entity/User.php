@@ -35,6 +35,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $credit = 50 ;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,5 +127,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getCredit(): ?int
+    {
+        return $this->credit;
+    }
+
+    public function setCredit(int $credit): self
+    {
+        $this->credit = $credit;
+
+        return $this;
     }
 }
