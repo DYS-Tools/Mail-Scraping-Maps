@@ -59,12 +59,6 @@ class Payment
     }
     /* end get env var Paypal */
 
-    // todo : function
-    public function payout(){
-        // transfet funds in acct_XXXXX account
-        return "function payout service";
-    }
-
     //////////////////
     // Paypal
     //////////////////
@@ -76,8 +70,8 @@ class Payment
     public function connectPaypal() {
         // https://developer.paypal.com/docs/platforms/get-started/#step-1-get-api-credentials
 
-        // $response = $this->client->request('POST', 'https://api.sandbox.paypal.com/v1/oauth2/token', [ // sandbox = dev                                                        
-        $response = $this->client->request('POST', 'https://api.paypal.com/v1/oauth2/token', [ // for prod
+        $response = $this->client->request('POST', 'https://api.sandbox.paypal.com/v1/oauth2/token', [ // sandbox = dev                                                        
+        //$response = $this->client->request('POST', 'https://api.paypal.com/v1/oauth2/token', [ // for prod
             'headers' => [
                 'Accept' => 'application/json, application/x-www-form-urlencoded',
                 'Accept-Language' => 'en_US',
@@ -93,5 +87,79 @@ class Payment
 
         // token
         return $tokenPaypalAcces;
+    }
+
+    /* 
+    * payment request with $price
+    */
+    public function getPay($price) {
+
+        $tokenAccesPaypal =  $this->connectPaypal() ;
+
+        $ch = curl_init('https://api-m.sandbox.paypal.com/v2/checkout/orders'); // sendbox = prod
+        //$ch = curl_init('https://api.sandbox.paypal.com/v2/checkout/orders/'.$orderId.'/capture');  // sendbox = dev  
+
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Authorization: Bearer ' . $tokenAccesPaypal,
+            'Accept: application/json',
+            'Content-Type: application/json',
+            //'PayPal-Request-Id : 7b92603e-77ed-4896-8e78-5dea2050476a'
+            //'PayPal-Partner-Attribution-Id:  BN-Code'
+        ));
+        // SSL certificat
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $payloadData = '
+        {
+          "intent" : "CAPTURE",
+          "purchase_units" :[
+            {
+              "amount" :{
+                "currency_code" : "USD",
+                "value" : "'.$price.'"
+              }
+            }
+          ]
+        }';
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payloadData); // send JSON
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return caracter
+
+
+        $result = curl_exec($ch);
+        //dump($result);  // no json
+
+        // get error
+        // $err = curl_error($ch); // dump($err) ;
+        curl_close($ch);
+
+        $resultJson = json_decode($result);
+
+
+        /*
+        curl -v -X POST https://api-m.sandbox.paypal.com/v2/checkout/orders \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer Access-Token" \
+        -d '{
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+            "amount": {
+                "currency_code": "USD",
+                "value": "100.00"
+            }
+            }
+        ]
+        }'
+
+        */ 
+
+    // To do : pay  $price
+    return $resultJson ;
+
     }
 }
