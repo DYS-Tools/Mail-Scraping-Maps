@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Sygma{% endblock %}
+
+
+
+{% block body %}
+
+    Nombre de crédit à acheter : {{ credit }} </br> 
+    Pour le prix de {{ price }} </br>
+
+    Cela représente  {{ price / credit }} </br>
+
+
+    Je suis d'accord et je shouaite acheter {{ credit }} crédit pour le prix de {{ price }} <br/>
+    <br/><br/><br/>
+
+    <a class="btn btn-info" href="{{ path('app_pay') }}">Payer {{ price }} euros</a>
+
+
+
+
+
+{% endblock %}
+
