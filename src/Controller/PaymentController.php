@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Export;
 use App\Service\Fetching;
+use App\Service\Payment;
 use App\Service\PhpParser;
 
 class PaymentController extends AbstractController
@@ -17,7 +18,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("/pay/", name="app_pay")
      */
-    public function indexListPrice(Request $request, PhpParser $phpParser): Response
+    public function indexListPrice(Payment $payment,Request $request, PhpParser $phpParser): Response
     {
 
         $form = $this->createForm(CreditType::class);
@@ -43,13 +44,21 @@ class PaymentController extends AbstractController
             }
 
             if ( $credit > 10000 ) {
-                $price = $credit * 0.10 ; 
+                $price = $credit * 0.05 ; 
             }
             
+
+            dd($payment->getPay($price)  );
+
+            // if pay is ok, user credit = + credit 
+
+
+            /*
             return $this->render('payment/pay.html.twig', [
-            'credit' => $credit,
-            'price' => $price,
-        ]);
+                'credit' => $credit,
+                'price' => $price,
+            ]);
+            */
         }
 
 
