@@ -52,10 +52,32 @@ class PaymentController extends AbstractController
         }
 
 
-        return $this->render('home/payment.html.twig', [
+        return $this->render('Payment/payment.html.twig', [
             'form' => $form->createView(),
             'credit' => $credit,
             'price' => $price,
+        ]);
+    }
+
+    /**
+     * @Route("valid/pay/", name="succes_pay")
+     */
+    public function succesPayment(Payment $payment,Request $request, PhpParser $phpParser): Response
+    {
+
+        return $this->render('Payment/SuccesPayment.html.twig', [
+          
+        ]);
+    }
+
+    /**
+     * @Route("invalid/pay/", name="invalid_pay")
+     */
+    public function invalidPayment(Payment $payment,Request $request, PhpParser $phpParser): Response
+    {
+
+        return $this->render('Payment/InvalidPayment.html.twig', [
+          
         ]);
     }
 }
