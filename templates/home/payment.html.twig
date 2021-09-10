@@ -8,35 +8,63 @@
 <div class="container"> 
 
 
-
-<h1> Acheter des crédits ( 1 Crédit = 1 mail ) </h1> 
-
-{% if app.user %}
+    {% if is_granted('ROLE_USER') %}
 
 
-<p> Pour le moment vous avez : {{ app.user.credit }} credit ! <br/> <br/>
+        <h2> Acheter des crédits ( 1 crédit = 1 mail ) </h2> 
+        {% if app.user %}
+        <p> Pour le moment vous avez : {{ app.user.credit }} credit !<br/>
+            {% if app.user.credit == 50 %}
+                50 crédits sont offert à l'inscription. 
+            {% endif %}
+        <br/> <br/>
+        {% endif %}
+        <h3> Combien de crédit voulez vous acheter ? </h3>
+        {{ form(form) }}
+        {% if credit > 0 %}
+            Nombre de crédit à acheter : {{ credit }} </br> 
+            Pour le prix de {{ price }} euros </br>
+            Cela représente  {{ price / credit }} euros par email.  </br>
+            Je suis d'accord et je shouaite acheter {{ credit }} crédit pour le prix de {{ price }} <br/>
+            <br/>
+            <!-- pay here  with other function --> 
+            <a class="btn btn-info" href="{{ path('app_pay') }}">Payer {{ price }} euros</a>
+        {% endif %}
 
-
-    {% if app.user.credit == 50 %}
-        La Version d'essai de Sygma est de 50 crédits. <br/> <br/>
+    {% else %}
+        Vous devez etre connecté pour acheter des crédits.
     {% endif %}
 
-<br/> <br/>
-
-{% endif %}
-
-
-        <h3> Combien de crédit Voulez vous acheter ? </h3>
-
-        {{ form(form) }}
+        <!-- test integrate paypal --> 
+        <!-- payment platform  --> 
+        <!-- https://developer.paypal.com/docs/platforms/checkout/set-up-payments/ -->
+        <script src="https://www.paypal.com/sdk/js?&client-id=<Client-ID>&merchant-id=<Merchant-ID>"></script>
 
 
-       
+        <div id="paypal-button-container"></div>
 
-
-
-
-
+        <script>
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+            return fetch('/my-server/create-order', {
+                method: 'POST'
+            }).then(function(res) {
+                return res.json();
+            }).then(function(data) {
+                return data.id;
+            });
+            },
+            onApprove: function (data, actions) {
+            return fetch('/my-server/capture-order/' + data.orderID, {
+                method: 'POST'
+            }).then(function(res) {
+                if (!res.ok) {
+                alert('Something went wrong');
+                }
+            });
+            }
+        }).render('#paypal-button-container');
+        </script>
 
 </div> 
 
