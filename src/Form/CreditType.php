@@ -15,7 +15,7 @@ class CreditType extends AbstractType
         $builder
 
             ->add('credit', TextType::class, [
-                'label' => 'Nombre de crédit ?',
+                'label' => 'Nombre de crédit',
             ])
             
             ->add('save', SubmitType::class)

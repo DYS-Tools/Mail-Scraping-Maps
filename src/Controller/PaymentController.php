@@ -25,45 +25,37 @@ class PaymentController extends AbstractController
         
         $form->handleRequest($request);
 
+        $credit = 0 ; 
+        $price = 0; 
+        
         if ($form->isSubmitted() && $form->isValid()) {
             
             $credit = $form->getData()['credit']; 
 
             $coeff = 0 ; 
 
-            if ( $credit < 1000 ) {
+            if ( $credit <= 1000 ) {
                 $price = $credit * 0.17 ; 
             }
 
-            if ( $credit > 2000 ) {
+            if ( $credit >= 2000 ) {
                 $price = $credit * 0.15 ; 
             }
 
-            if ( $credit > 4000 ) {
+            if ( $credit >= 4000 ) {
                 $price = $credit * 0.14 ; 
             }
 
-            if ( $credit > 10000 ) {
+            if ( $credit >= 10000 ) {
                 $price = $credit * 0.05 ; 
             }
-            
-
-            dd($payment->getPay($price)  );
-
-            // if pay is ok, user credit = + credit 
-
-
-            /*
-            return $this->render('payment/pay.html.twig', [
-                'credit' => $credit,
-                'price' => $price,
-            ]);
-            */
         }
 
 
         return $this->render('home/payment.html.twig', [
             'form' => $form->createView(),
+            'credit' => $credit,
+            'price' => $price,
         ]);
     }
 }
