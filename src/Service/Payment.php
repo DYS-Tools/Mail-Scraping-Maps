@@ -96,6 +96,7 @@ class Payment
 
         $tokenAccesPaypal =  $this->connectPaypal() ;
 
+        // I think is not good request for payment 
         $ch = curl_init('https://api-m.sandbox.paypal.com/v2/checkout/orders'); // sendbox = prod
         //$ch = curl_init('https://api.sandbox.paypal.com/v2/checkout/orders/'.$orderId.'/capture');  // sendbox = dev  
 
