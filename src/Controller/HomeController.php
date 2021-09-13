@@ -14,9 +14,20 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class HomeController extends AbstractController
 {
-
     /**
      * @Route("/", name="home")
+     */
+    public function Home(): Response
+    {
+
+        return $this->render('home.html.twig', [
+          
+        ]);
+    }
+
+
+    /**
+     * @Route("/getMail", name="scrapping_mail")
      */
     public function index(Request $request, Export $export, Fetching $fetching, PhpParser $phpParser): Response
     {
@@ -50,14 +61,25 @@ class HomeController extends AbstractController
 
             $test = $statusCode; 
 
-            return $this->render('home/result.html.twig', [
+            return $this->render('service/Scrapping/result.html.twig', [
             'results' => json_encode($results),
             'test' => $test,
         ]);
         }
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('service/Scrapping/scrappingMail.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/sell", name="landing_page_1")
+     */
+    public function landingPage(): Response
+    {
+
+        return $this->render('landingPage.html.twig', [
+          
         ]);
     }
 }
